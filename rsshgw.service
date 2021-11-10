@@ -1,0 +1,14 @@
+[Unit]
+Description=RSSH gateway API
+After=network.target
+
+[Service]
+Type=simple
+User=rssh
+Group=rssh
+Environment=HOME=/home/rssh
+WorkingDirectory=/home/rssh/rsshgw
+ExecStart=/home/rssh/rsshgw/server.ts
+
+[Install]
+WantedBy=multi-user.target

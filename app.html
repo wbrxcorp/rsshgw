@@ -1,0 +1,47 @@
+<div class="card">
+    <div class="card-header">SSH公開鍵の登録</div>
+    <div class="card-body">
+        <form name="form" class="form-horizontal" (ngSubmit)="registerKey()">
+            <div>
+                <input type="text" class="form-control" [(ngModel)]="key" placeholder="SSH公開鍵" required="" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">登録</button>
+            </div>
+            <div *ngIf="errors.register" class="alert alert-danger">{{errors.register}}</div>
+            <div *ngIf="messages.register" class="alert alert-info">{{messages.register}}</div>
+        </form>
+    </div>
+</div>
+
+<div>
+    SSH公開鍵を登録したら、下記にて RSSH接続を行ってください
+    <dl>
+        <dt>Connection Type</dt>
+        <dd>Public key</dd>
+        <dt>Login ID</dt>
+        <dd>rssh</dd>
+        <dt>Host Address</dt>
+        <dd>{{hostname()}}</dd>
+    </dl>
+    接続に成功すると、SSH接続するためのポート番号をRSSH IDから確認できるようになります。
+</div>
+
+<br/>
+
+<div class="card">
+    <div class="card-header">ポート番号の確認</div>
+    <div class="card-body">
+        <form (ngSubmit)="checkPortNumber()">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" [(ngModel)]="rsshid" placeholder="RSSH ID" [ngModelOptions]="{standalone: true}">
+                <button class="btn btn-primary" type="submit" [disabled]="!rsshid">確認</button>
+            </div>
+        </form>
+        <div *ngIf="errors.port" class="alert alert-danger">{{errors.port}}</div>
+        <div *ngIf="port">
+            ポート番号は {{port}} です。SSH例:<br/>
+            <pre>ssh -p {{port}} root@{{hostname()}}</pre>
+        </div>
+    </div>
+</div>

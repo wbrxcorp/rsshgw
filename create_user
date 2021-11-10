@@ -1,0 +1,25 @@
+#!/usr/bin/env -S deno run --allow-read --allow-write --unstable
+import { DB } from "https://deno.land/x/sqlite/mod.ts";
+import { Secret } from "https://deno.land/x/cliffy/prompt/secret.ts";
+import { Input } from "https://deno.land/x/cliffy/prompt/input.ts";
+import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
+
+var id = Deno.args.length > 0? Deno.args[0] : null;
+
+if (id == null) {
+    id = await Input.prompt("Enter ID");
+}
+
+const password = await Secret.prompt("Enter password");
+
+const user_db = new DB("rsshgw.sqlite3");
+user_db.query(`
+  CREATE TABLE IF NOT EXISTS users (
+    id text PRIMARY KEY,
+    password TEXT NOT NULL
+  )
+`);
+
+user_db.query("insert into users(id,password) values(?,?)", [id,bcrypt.hashSync(password)]);
+
+console.log("User " + id + " added");
