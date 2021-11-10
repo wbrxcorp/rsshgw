@@ -16,6 +16,10 @@ systemdから起動する場合は rsshgw.service ファイルを /etc/systemd/s
 
 ./create_user を実行し、IDとパスワードを入力
 
+## 動作確認方法
+
+Webブラウザでサービスへアクセスすると簡易UIで機能を確認することができる
+
 ## API
 
 ### POST /login (ログイン)
