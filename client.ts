@@ -30,7 +30,7 @@ class AppComponent {
 
     checkPortNumber() : void {
         delete this.errors.port;
-        this.http.get(`./rsshid/${this.rsshid}`).subscribe((json:{success:boolean,port:number|undefined}) => {
+        this.http.get<{success:boolean,port:number|undefined}>(`./rsshid/${this.rsshid}`).subscribe((json) => {
             if (json.success) {
                 this.port = json.port;
             } else {
@@ -53,7 +53,7 @@ class AppComponent {
             return;
         }
 
-        this.http.post("./register-key", {key:this.key}).subscribe((json:{success:boolean}) => {
+        this.http.post<{success:boolean}>("./register-key", {key:this.key}).subscribe((json) => {
             if (json.success) {
                 this.messages.register = "公開鍵が登録されました";
             } else {

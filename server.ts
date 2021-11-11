@@ -1,6 +1,5 @@
 #!/usr/bin/env -S deno run --allow-net --allow-read --allow-write --allow-env --unstable --watch
 import { moveSync } from "https://deno.land/std/fs/move.ts";
-import { Buffer } from "https://deno.land/std/io/buffer.ts";
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import { Session } from "https://deno.land/x/oak_sessions/mod.ts";
 import { DB } from "https://deno.land/x/sqlite/mod.ts";
@@ -72,7 +71,7 @@ router.get("/", session.initMiddleware(), async (context) => {
     }
     //else
     context.response.headers.set("Content-Encoding", "gzip");
-    context.response.body = new Buffer(app_js_gz.buffer);
+    context.response.body = app_js_gz;
 })
 .get("/app.js.map", context => { // ソースマップを出力
     context.response.type = "application/json";
